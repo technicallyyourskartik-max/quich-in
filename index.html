@@ -11,8 +11,7 @@
   :root {
     --bg: #0a0a0a;
     --fg: #f5f5f5;
-    --dim: #8a8a8a;
-    --line: #2a2a2a;
+    --dim: #7a7a7a;
   }
 
   * { box-sizing: border-box; }
@@ -47,122 +46,33 @@
   }
 
   .tagline {
-    margin-top: 14px;
-    font-size: 13px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--dim);
-    max-width: 420px;
-  }
-
-  .rule {
-    width: 48px;
-    height: 1px;
-    background: var(--line);
-    margin: 44px 0;
-  }
-
-  .game {
-    width: min(400px, 88vw);
-  }
-
-  .game-label {
-    font-size: 11px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 20px;
-  }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  .chip {
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--fg);
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    padding: 9px 18px;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-  }
-
-  .chip:hover { border-color: var(--fg); }
-  .chip.active { background: var(--fg); color: #0a0a0a; border-color: var(--fg); }
-
-  .results {
-    margin-top: 26px;
-    text-align: left;
-    min-height: 168px;
-  }
-
-  .placeholder {
-    color: var(--dim);
-    font-size: 13px;
-    text-align: center;
-    margin-top: 60px;
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-  }
-
-  .spot {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--line);
-    opacity: 0;
-    transform: translateY(4px);
-    animation: rise 0.4s ease forwards;
-  }
-
-  .spot:last-child { border-bottom: none; }
-
-  @keyframes rise {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .spot-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 19px;
-  }
-
-  .spot-meta {
+    margin-top: 18px;
     font-size: 12px;
-    color: var(--dim);
-  }
-
-  .spot-offer {
-    font-size: 13px;
-    letter-spacing: 0.04em;
-  }
-
-  .spot.best .spot-name { position: relative; }
-  .spot.best .spot-offer { color: var(--fg); font-weight: 500; }
-  .spot.best .spot-name::after {
-    content: "best deal";
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 9px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--dim);
-    margin-top: 2px;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 1px;
+    height: 0.9em;
+    background: var(--dim);
+    margin-left: 2px;
+    vertical-align: -0.1em;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
   }
 
   .footer {
     position: fixed;
-    bottom: 20px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: #4a4a4a;
+    bottom: 22px;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: #3a3a3a;
     text-transform: uppercase;
   }
 </style>
@@ -170,81 +80,9 @@
 <body>
 
   <h1 class="wordmark">quich</h1>
-  <div class="tagline">quick check &mdash; before you buy, see who's got the better deal nearby</div>
-
-  <div class="rule"></div>
-
-  <div class="game">
-    <div class="game-label">try a quich</div>
-    <div class="chips">
-      <button class="chip" data-cat="Coffee">Coffee</button>
-      <button class="chip" data-cat="Sneakers">Sneakers</button>
-      <button class="chip" data-cat="Groceries">Groceries</button>
-      <button class="chip" data-cat="Phone repair">Phone repair</button>
-    </div>
-    <div class="results" id="results">
-      <div class="placeholder">pick something you're about to buy</div>
-    </div>
-  </div>
+  <div class="tagline">something's coming<span class="cursor"></span></div>
 
   <div class="footer">quich.in</div>
 
-<script>
-  const data = {
-    "Coffee": [
-      { name: "Blue Tokai, MG Road", dist: "0.4 km", offer: "20% off" },
-      { name: "Third Wave Coffee", dist: "0.9 km", offer: "Buy 1 Get 1" },
-      { name: "Corner Cafe", dist: "1.2 km", offer: "10% off" },
-    ],
-    "Sneakers": [
-      { name: "Nike Store, Forum Mall", dist: "2.1 km", offer: "30% off" },
-      { name: "Decathlon", dist: "3.4 km", offer: "Flat ₹500 off" },
-      { name: "Local Sneaker Hub", dist: "1.0 km", offer: "15% off" },
-    ],
-    "Groceries": [
-      { name: "BigBasket Express", dist: "0.6 km", offer: "25% off first order" },
-      { name: "More Supermarket", dist: "0.8 km", offer: "10% off" },
-      { name: "Local Kirana", dist: "0.2 km", offer: "5% off" },
-    ],
-    "Phone repair": [
-      { name: "iCare Center", dist: "1.5 km", offer: "Free screen check" },
-      { name: "MobileFix Pro", dist: "0.9 km", offer: "20% off repair" },
-      { name: "QuickFix Corner", dist: "2.0 km", offer: "No labour charge" },
-    ],
-  };
-
-  function parsePercent(offer) {
-    const m = offer.match(/(\d+)%/);
-    return m ? parseInt(m[1], 10) : -1;
-  }
-
-  const chips = document.querySelectorAll('.chip');
-  const results = document.getElementById('results');
-
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-
-      const cat = chip.dataset.cat;
-      const spots = [...data[cat]].sort((a, b) => parsePercent(b.offer) - parsePercent(a.offer));
-
-      results.innerHTML = '';
-      spots.forEach((spot, i) => {
-        const row = document.createElement('div');
-        row.className = 'spot' + (i === 0 ? ' best' : '');
-        row.style.animationDelay = (i * 0.08) + 's';
-        row.innerHTML = `
-          <div>
-            <div class="spot-name">${spot.name}</div>
-            <div class="spot-meta">${spot.dist} away</div>
-          </div>
-          <div class="spot-offer">${spot.offer}</div>
-        `;
-        results.appendChild(row);
-      });
-    });
-  });
-</script>
 </body>
 </html>
