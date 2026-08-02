@@ -9,24 +9,70 @@
     margin: 0;
     height: 100%;
     background: #000;
+    overflow: hidden;
   }
-  .wrap {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  #bouncer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    will-change: transform;
   }
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+  #bouncer img {
+    width: 100%;
     display: block;
+    border-radius: 8px;
+  }
+  #caption {
+    position: fixed;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <img src="photo.png" alt="quich.in">
-</div>
+<div id="bouncer"><img src="photo.png" alt="quich.in"></div>
+<div id="caption">Launching quich.in soon</div>
+<script>
+  const el = document.getElementById('bouncer');
+  let w, h, x, y, vx, vy;
+
+  function reset() {
+    w = el.offsetWidth;
+    h = el.offsetHeight;
+    x = Math.random() * (window.innerWidth - w);
+    y = Math.random() * (window.innerHeight - h);
+  }
+
+  reset();
+  vx = 2.2;
+  vy = 1.8;
+
+  function tick() {
+    x += vx;
+    y += vy;
+
+    if (x <= 0) { x = 0; vx = Math.abs(vx); }
+    if (x + w >= window.innerWidth) { x = window.innerWidth - w; vx = -Math.abs(vx); }
+    if (y <= 0) { y = 0; vy = Math.abs(vy); }
+    if (y + h >= window.innerHeight) { y = window.innerHeight - h; vy = -Math.abs(vy); }
+
+    el.style.transform = `translate(${x}px, ${y}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+  window.addEventListener('resize', () => {
+    x = Math.min(x, window.innerWidth - w);
+    y = Math.min(y, window.innerHeight - h);
+  });
+</script>
 </body>
 </html>
